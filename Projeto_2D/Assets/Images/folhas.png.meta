@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 13797811b3885b74fa0b814a48690012
+guid: cad120df5321ff34da40a84c2b1ecee8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,12 +43,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
-  spriteMeshType: 0
-  alignment: 9
+  spriteMeshType: 1
+  alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 1000
+  spritePixelsToUnits: 100
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -108,84 +108,18 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: getting_over_snake_0
-      rect:
-        serializedVersion: 2
-        x: 59
-        y: 791
-        width: 884
-        height: 539
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: a6d34b4261fddf1439d600d57b9c9ac1
-      internalID: -1404227268
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: getting_over_snake_1
-      rect:
-        serializedVersion: 2
-        x: 961
-        y: 829
-        width: 1372
-        height: 518
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 1106, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 3943bc12a10b12748b6b4a78ccc13b6c
-      internalID: 866057009
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: getting_over_snake_2
-      rect:
-        serializedVersion: 2
-        x: 2357
-        y: 679
-        width: 1592
-        height: 650
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 489024ad7ad05564aa0cd12a2e2c8cff
-      internalID: 1300298075
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
     spriteID: 5e97eb03825dee720800000000000000
-    internalID: 1537655665
+    internalID: 0
     vertices: []
     indices: 
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      getting_over_snake_0: -1404227268
-      getting_over_snake_1: 866057009
-      getting_over_snake_2: 1300298075
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
