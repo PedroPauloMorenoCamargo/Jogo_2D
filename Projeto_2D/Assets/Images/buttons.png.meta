@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: cad120df5321ff34da40a84c2b1ecee8
+guid: 4b36c3dfab1bc9a4c8d6ee5d4231ad3d
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,30 +93,17 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: folhas_0
+      name: buttons_0
       rect:
         serializedVersion: 2
-        x: 27
-        y: 593
-        width: 1608
-        height: 786
+        x: 146
+        y: 367
+        width: 1219
+        height: 1182
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +111,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4d5d72694dcbff341b54e610c803697d
-      internalID: 102470369
+      spriteID: 77a75b5406801a14a9b724210ac81799
+      internalID: 283474001
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: folhas_1
+      name: buttons_1
       rect:
         serializedVersion: 2
-        x: 1709
-        y: 627
-        width: 1594
-        height: 894
+        x: 1651
+        y: 395
+        width: 1643
+        height: 1218
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,8 +132,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c85eec576e648c74f83a86c630842006
-      internalID: 1022317210
+      spriteID: 0072f4c7da5559743828795e38563372
+      internalID: -1618543423
       vertices: []
       indices: 
       edges: []
@@ -162,8 +149,8 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      folhas_0: 102470369
-      folhas_1: 1022317210
+      buttons_0: 283474001
+      buttons_1: -1618543423
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
