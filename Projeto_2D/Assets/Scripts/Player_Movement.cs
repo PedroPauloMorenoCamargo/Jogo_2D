@@ -11,9 +11,18 @@ public class Player_Movement : MonoBehaviour
     private int groundedCount = 0;  // Counter for how many child objects are grounded
     public bool isGrounded = false;  // To check if any part is touching the ground
 
+    public bool can_move = false;  // Toggle to enable/disable movement
+    
     private void Update()
     {
-        // Horizontal movement for the object controlled by the distance joint
+        if (can_move)
+        {
+            Move();
+        }
+        
+    }
+
+    private void Move(){
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             joints[0].AddForce(Vector2.left * moveForce);  // First item in the list (distance joint)
@@ -39,7 +48,6 @@ public class Player_Movement : MonoBehaviour
             Launch();
         }
     }
-
     // Function to launch the object along the X-axis
     private void Launch()
     {
@@ -51,6 +59,11 @@ public class Player_Movement : MonoBehaviour
     public void OnChildCollisionWithGround()
     {
         // Increment the grounded count when a child touches the ground
+        if (can_move == false)
+        {
+            can_move = true;
+
+        }
         groundedCount++;
         isGrounded = true;  // As long as at least one child is on the ground, isGrounded is true
     }

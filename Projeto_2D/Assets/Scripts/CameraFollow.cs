@@ -1,6 +1,7 @@
 using UnityEngine;
+using System.Collections;
 
-public class CameraFollow: MonoBehaviour
+public class CameraFollow : MonoBehaviour
 {
     public Transform[] targets;  // Array of 4 objects to track
     public Vector2 offset;  // Offset to adjust the camera's position (X, Y only)
@@ -8,20 +9,49 @@ public class CameraFollow: MonoBehaviour
 
     private Vector3 velocity = Vector3.zero;  // Vector3 needed for SmoothDamp
 
+    public Camera mainCamera;  // Reference to the main camera
+
+    public int followPlayer = 0;  // Toggle to follow the player
+
+    public float zoomSpeed = 2f;  // Speed of the zoom effect
+
+    // Screen limits for the camera (define the boundaries of the level)
+    public float minX = -10f;
+    public float maxX = 10f;
+    public float minY = -5f;
+    public float maxY = 5f;
+
     void LateUpdate()
     {
-        // Ensure there are targets to calculate the mean position
-        if (targets.Length == 0)
-            return;
+        if (followPlayer == 2)
+        {
+            FollowPlayer();
+        }
+        else if (followPlayer == 1)
+        {
+            StartCoroutine(ZoomIn());
+            followPlayer = 2;
+            smoothSpeed = 1f;
+        }
+    }
 
-        // Calculate the mean position (X, Y) of all targets using Vector2
-        Vector2 centerPoint = GetMeanPosition();
+    // Function to follow the player
+    void FollowPlayer()
+    {
+        // Calculate the mean position of the targets
+        Vector2 meanPosition = GetMeanPosition();
 
-        // Apply offset and calculate the desired position, keeping the camera's Z fixed
-        Vector3 desiredPosition = new Vector3(centerPoint.x + offset.x, centerPoint.y + offset.y, transform.position.z);
+        // Calculate the target position for the camera
+        Vector3 targetPosition = new Vector3(meanPosition.x, meanPosition.y, transform.position.z);
 
-        // Smoothly move the camera to the desired position (X, Y only, Z stays fixed)
-        transform.position = Vector3.SmoothDamp(transform.position, desiredPosition, ref velocity, smoothSpeed);
+        // Apply screen limits to the camera's target position
+        targetPosition.x = Mathf.Clamp(targetPosition.x, minX, maxX);  // Clamp the x position
+        targetPosition.y = Mathf.Clamp(targetPosition.y, minY, maxY);  // Clamp the y position
+
+        // Smoothly move the camera towards the target position
+        transform.position = Vector3.SmoothDamp(transform.position, targetPosition + (Vector3)offset, ref velocity, smoothSpeed);
+        
+        smoothSpeed = 0.125f;  // Reset smooth speed for normal follow behavior
     }
 
     // Function to calculate the mean (center) position of the targets based on X and Y
@@ -36,5 +66,17 @@ public class CameraFollow: MonoBehaviour
 
         // Return the mean position as a Vector2
         return sum / targets.Length;
+    }
+
+    IEnumerator ZoomIn()
+    {
+        while (Mathf.Abs(mainCamera.orthographicSize - 10) > 0.01f)
+        {
+            mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, 10, Time.deltaTime * zoomSpeed);
+            yield return null;  // Wait for the next frame
+        }
+
+        // Ensure the final camera size is exactly the target size
+        mainCamera.orthographicSize = 10;
     }
 }
