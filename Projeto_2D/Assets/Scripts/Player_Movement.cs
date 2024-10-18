@@ -7,22 +7,23 @@ public class Player_Movement : MonoBehaviour
     public float moveForce = 5f;    // Movement speed
     public float rotateForce = 100f; // Rotation speed for the head
     public float launchForce = 10f;  // Impulse force when launching
+    public AudioSource jumpAudio;  // Audio source for the jump sound
 
     private int groundedCount = 0;  // Counter for how many child objects are grounded
     public bool isGrounded = false;  // To check if any part is touching the ground
 
     public bool can_move = false;  // Toggle to enable/disable movement
-    
+
     private void Update()
     {
         if (can_move)
         {
             Move();
         }
-        
     }
 
-    private void Move(){
+    private void Move()
+    {
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             joints[0].AddForce(Vector2.left * moveForce);  // First item in the list (distance joint)
@@ -48,11 +49,18 @@ public class Player_Movement : MonoBehaviour
             Launch();
         }
     }
+
     // Function to launch the object along the X-axis
     private void Launch()
     {
         Vector2 launchDirection = joints[0].transform.right;  // X-axis of the distance joint object
         joints[0].AddForce(launchDirection * launchForce, ForceMode2D.Impulse);  // Launch the distance joint object
+        
+        // Play the jump sound when launching
+        if (jumpAudio != null)
+        {
+            jumpAudio.Play();
+        }
     }
 
     // These methods are called by the child collision scripts to notify the parent about collisions
@@ -62,7 +70,6 @@ public class Player_Movement : MonoBehaviour
         if (can_move == false)
         {
             can_move = true;
-
         }
         groundedCount++;
         isGrounded = true;  // As long as at least one child is on the ground, isGrounded is true
@@ -72,13 +79,12 @@ public class Player_Movement : MonoBehaviour
     {
         // Decrement the grounded count when a child leaves the ground
         groundedCount--;
-        
+
         // If no child is on the ground, set isGrounded to false
         if (groundedCount <= 0)
         {
             isGrounded = false;
             groundedCount = 0;  // Ensure the grounded count doesn't go below 0
         }
-        
     }
 }
