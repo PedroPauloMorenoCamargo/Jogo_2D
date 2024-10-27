@@ -94,26 +94,31 @@ public class CameraFollow : MonoBehaviour
     }
 
     // Coroutine to perform the camera shake
-    private IEnumerator Shake()
+    // Coroutine to perform the camera shake while keeping the player in frame
+private IEnumerator Shake()
+{
+    isShaking = true;
+    Vector3 originalPosition = transform.position;
+
+    float elapsed = 0f;
+
+    while (elapsed < shakeDuration)
     {
-        isShaking = true;
-        Vector3 originalPosition = transform.position;
+        // Calculate the target position around the player with shake offset
+        Vector3 playerPosition = targets[0].position;  // Assuming targets[0] is the player
+        float xOffset = Random.Range(-1f, 1f) * shakeMagnitude;
+        float yOffset = Random.Range(-1f, 1f) * shakeMagnitude;
 
-        float elapsed = 0f;
+        // Set the camera to follow player position with shake offset
+        transform.position = new Vector3(originalPosition.x + xOffset, playerPosition.y + yOffset, originalPosition.z);
 
-        while (elapsed < shakeDuration)
-        {
-            float xOffset = Random.Range(-1f, 1f) * shakeMagnitude;
-            float yOffset = Random.Range(-1f, 1f) * shakeMagnitude;
+        elapsed += Time.deltaTime;
 
-            transform.position = new Vector3(originalPosition.x + xOffset, originalPosition.y + yOffset, originalPosition.z);
-
-            elapsed += Time.deltaTime;
-
-            yield return null;  // Wait for the next frame
-        }
-
-        transform.position = originalPosition;  // Reset to original position
-        isShaking = false;
+        yield return null;  // Wait for the next frame
     }
+
+    // Return to the regular smooth follow after shake
+    isShaking = false;
+}
+
 }

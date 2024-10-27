@@ -32,7 +32,7 @@ public class MenuItem : MonoBehaviour
         // Reset the color back to original after the click
         spriteRenderer.color = originalColor;
 
-        playerMovement.joints[0].AddForce(Vector2.right * launchForce, ForceMode2D.Impulse);
+        playerMovement.joints[0].AddForce(Vector2.right * launchForce*1.2f, ForceMode2D.Impulse);
     }
 
 }
