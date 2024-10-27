@@ -8,83 +8,142 @@ public class Player_Movement : MonoBehaviour
     public float rotateForce = 100f; // Rotation speed for the head
     public float launchForce = 10f;  // Impulse force when launching
     public AudioSource jumpAudio;  // Audio source for the jump sound
+    public GameObject balls; // List of balls (Bola_1, Bola_2, Bola_3)
 
     private int groundedCount = 0;  // Counter for how many child objects are grounded
     public bool isGrounded = false;  // To check if any part is touching the ground
 
     public bool can_move = false;  // Toggle to enable/disable movement
+    private bool ballShown = false; // Toggle to show/hide balls
 
+    private float rest_pos = -45.0f;  // Resting position of the head
+
+    public float impactThreshold = 5f; // Minimum impact velocity to trigger camera shake
+    private CameraFollow cameraFollow; // Reference to CameraFollow script
+
+    private float player_last_y_position;
+
+    private void Start(){   
+        player_last_y_position = joints[0].transform.position.y;
+        // Get reference to the CameraFollow component on the main camera
+        cameraFollow = Camera.main.GetComponent<CameraFollow>();
+    }
     private void Update()
     {
-        if (can_move)
+        if (Input.GetKeyDown(KeyCode.C))
         {
+            Reset_Position();
+        }
+        
+        if (can_move){
             Move();
+            if (Input.GetKeyUp(KeyCode.Space)){
+                if(isGrounded){
+                    Launch();
+                }
+                HideBalls();
+            }
+
+            if (Input.GetKeyDown(KeyCode.Space)){
+                ShowBalls();
+            }
+
+            if (ballShown){
+                UpdateBallPositions();
+            }
         }
     }
 
     private void Move()
     {
-        if (Input.GetKey(KeyCode.LeftArrow))
+        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
         {
-            joints[0].AddForce(Vector2.left * moveForce);  // First item in the list (distance joint)
+            joints[0].AddForce(Vector2.left * moveForce);
         }
-        else if (Input.GetKey(KeyCode.RightArrow))
+        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
         {
             joints[0].AddForce(Vector2.right * moveForce);
         }
 
         // Rotation of the head (last item in the list)
-        if (Input.GetKey(KeyCode.UpArrow))
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
         {
-            joints[3].AddTorque(rotateForce);  // Apply torque to the head (4th item in the list)
+            joints[3].AddTorque(rotateForce);
         }
-        else if (Input.GetKey(KeyCode.DownArrow))
+        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
         {
-            joints[3].AddTorque(-rotateForce);  // Apply torque to the head
-        }
-
-        // If the object is grounded and a launch key is pressed (e.g., Space), apply impulse
-        if (isGrounded && Input.GetKeyDown(KeyCode.Space))
-        {
-            Launch();
+            joints[3].AddTorque(-rotateForce);
         }
     }
 
-    // Function to launch the object along the X-axis
+    private void ShowBalls()
+    {   
+        ballShown = true;
+        balls.SetActive(true);
+    }
+
+    private void HideBalls()
+    {
+        ballShown = false;
+        balls.SetActive(false);
+    }
+
+    private void UpdateBallPositions()
+    {
+        Vector2 headPosition = joints[3].transform.position;
+        Vector2 tailDirection = (joints[3].transform.position - joints[0].transform.position).normalized;
+
+        Vector2 offsetPosition = headPosition + tailDirection * (1.5f);
+        balls.transform.position = offsetPosition;
+        balls.transform.rotation = joints[3].transform.rotation;
+    }
+    private void Reset_Position()
+    {
+        joints[0].transform.position = new Vector2(-15.0f + rest_pos, 5.0f);
+        joints[0].transform.rotation = Quaternion.Euler(0, 0, 0);
+        joints[0].velocity = Vector2.zero;
+        joints[1].transform.position = new Vector2(-13.98f + rest_pos, 5.0f);
+        joints[1].transform.rotation = Quaternion.Euler(0, 0, 0);
+        joints[1].velocity = Vector2.zero;
+        joints[2].transform.position = new Vector2(-12.81f + rest_pos, 5.0f);
+        joints[2].transform.rotation = Quaternion.Euler(0, 0, 0);
+        joints[2].velocity = Vector2.zero;
+        joints[3].transform.position = new Vector2(-11.68f + rest_pos, 5.0f);
+        joints[3].transform.rotation = Quaternion.Euler(0, 0, 0);
+        joints[3].velocity = Vector2.zero;
+    }
+
     private void Launch()
     {
-        Vector2 launchDirection = joints[0].transform.right;  // X-axis of the distance joint object
-        joints[0].AddForce(launchDirection * launchForce, ForceMode2D.Impulse);  // Launch the distance joint object
-        
-        // Play the jump sound when launching
+        Vector2 launchDirection = joints[0].transform.right;
+        joints[0].AddForce(launchDirection * launchForce, ForceMode2D.Impulse);
+
         if (jumpAudio != null)
         {
             jumpAudio.Play();
         }
     }
 
-    // These methods are called by the child collision scripts to notify the parent about collisions
-    public void OnChildCollisionWithGround()
-    {
-        // Increment the grounded count when a child touches the ground
-        if (can_move == false)
-        {
+    public void OnChildCollisionWithGround(){
+        if (can_move == false){
             can_move = true;
         }
         groundedCount++;
-        isGrounded = true;  // As long as at least one child is on the ground, isGrounded is true
+        isGrounded = true;
+        if (Mathf.Abs(player_last_y_position - joints[0].transform.position.y)>30){
+            cameraFollow.ShakeCamera();
+        }
     }
 
     public void OnChildCollisionExitGround()
     {
-        // Decrement the grounded count when a child leaves the ground
         groundedCount--;
 
-        // If no child is on the ground, set isGrounded to false
-        if (groundedCount <= 0)
-        {
+        if (groundedCount <= 0){
             isGrounded = false;
-            groundedCount = 0;  // Ensure the grounded count doesn't go below 0
+            groundedCount = 0;
         }
+
+        player_last_y_position = joints[0].transform.position.y;
     }
 }

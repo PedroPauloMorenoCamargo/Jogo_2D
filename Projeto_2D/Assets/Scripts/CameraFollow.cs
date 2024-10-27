@@ -14,6 +14,8 @@ public class CameraFollow : MonoBehaviour
     public int followPlayer = 0;  // Toggle to follow the player
 
     public float zoomSpeed = 2f;  // Speed of the zoom effect
+    public float shakeDuration = 0.2f;  // Duration of the shake effect
+    public float shakeMagnitude = 0.3f;  // Magnitude of the shake effect
 
     // Screen limits for the camera (define the boundaries of the level)
     public float minX = -10f;
@@ -21,9 +23,11 @@ public class CameraFollow : MonoBehaviour
     public float minY = -5f;
     public float maxY = 5f;
 
+    private bool isShaking = false;  // Flag to indicate if the camera is currently shaking
+
     void LateUpdate()
     {
-        if (followPlayer == 2)
+        if (followPlayer == 2 && !isShaking)
         {
             FollowPlayer();
         }
@@ -78,5 +82,38 @@ public class CameraFollow : MonoBehaviour
 
         // Ensure the final camera size is exactly the target size
         mainCamera.orthographicSize = 10;
+    }
+
+    // Public method to trigger the camera shake
+    public void ShakeCamera()
+    {
+        if (!isShaking)
+        {
+            StartCoroutine(Shake());
+        }
+    }
+
+    // Coroutine to perform the camera shake
+    private IEnumerator Shake()
+    {
+        isShaking = true;
+        Vector3 originalPosition = transform.position;
+
+        float elapsed = 0f;
+
+        while (elapsed < shakeDuration)
+        {
+            float xOffset = Random.Range(-1f, 1f) * shakeMagnitude;
+            float yOffset = Random.Range(-1f, 1f) * shakeMagnitude;
+
+            transform.position = new Vector3(originalPosition.x + xOffset, originalPosition.y + yOffset, originalPosition.z);
+
+            elapsed += Time.deltaTime;
+
+            yield return null;  // Wait for the next frame
+        }
+
+        transform.position = originalPosition;  // Reset to original position
+        isShaking = false;
     }
 }
