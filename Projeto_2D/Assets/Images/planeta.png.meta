@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9b5500f0b6b358b4d9868372192c926e
+guid: 53df42ae637416b468d4b7d53376d895
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,112 +108,7 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites:
-    - serializedVersion: 2
-      name: bones1_0
-      rect:
-        serializedVersion: 2
-        x: 451
-        y: 1168
-        width: 218
-        height: 433
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: cbef9423dea47f54992a9074113fd184
-      internalID: -1294942603
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bones1_1
-      rect:
-        serializedVersion: 2
-        x: 749
-        y: 1359
-        width: 220
-        height: 286
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: bc34146f27fd8494e88bedf877ba8ef3
-      internalID: -1592710564
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bones1_2
-      rect:
-        serializedVersion: 2
-        x: 1021
-        y: 1159
-        width: 320
-        height: 443
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 7c49b53af091f2346ab88b12e1202392
-      internalID: -498533468
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bones1_3
-      rect:
-        serializedVersion: 2
-        x: 2726
-        y: 324
-        width: 1339
-        height: 1067
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 97d430b54cd31b645a10fc1e2497de02
-      internalID: -587484822
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: bones1_4
-      rect:
-        serializedVersion: 2
-        x: 109
-        y: 41
-        width: 462
-        height: 244
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 52af5276ff8013b46a52d9b7633d73d4
-      internalID: 180006422
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
+    sprites: []
     outline: []
     physicsShape: []
     bones: []
@@ -224,12 +119,7 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable:
-      bones1_0: -1294942603
-      bones1_1: -1592710564
-      bones1_2: -498533468
-      bones1_3: -587484822
-      bones1_4: 180006422
+    nameFileIdTable: {}
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

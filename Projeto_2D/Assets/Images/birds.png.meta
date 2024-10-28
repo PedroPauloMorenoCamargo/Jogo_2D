@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 9b5500f0b6b358b4d9868372192c926e
+guid: ab3600d7cb0557d49b5017f3cec047f1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -110,13 +110,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: bones1_0
+      name: birds_0
       rect:
         serializedVersion: 2
-        x: 451
-        y: 1168
-        width: 218
-        height: 433
+        x: 57
+        y: 961
+        width: 1098
+        height: 380
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -124,20 +124,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: cbef9423dea47f54992a9074113fd184
-      internalID: -1294942603
+      spriteID: 426ad8ec22cf8154e99735850c1947b5
+      internalID: 803212192
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bones1_1
+      name: birds_1
       rect:
         serializedVersion: 2
-        x: 749
-        y: 1359
-        width: 220
-        height: 286
+        x: 2567
+        y: 1123
+        width: 499
+        height: 220
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -145,20 +145,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bc34146f27fd8494e88bedf877ba8ef3
-      internalID: -1592710564
+      spriteID: ecb4baf02634a2b4898d00c5eb69134a
+      internalID: -317319342
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bones1_2
+      name: birds_2
       rect:
         serializedVersion: 2
-        x: 1021
-        y: 1159
-        width: 320
-        height: 443
+        x: 3493
+        y: 1229
+        width: 522
+        height: 391
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -166,20 +166,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c49b53af091f2346ab88b12e1202392
-      internalID: -498533468
+      spriteID: b046fd69d6dbf1a478ed2c5646089644
+      internalID: 70852285
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bones1_3
+      name: birds_3
       rect:
         serializedVersion: 2
-        x: 2726
-        y: 324
-        width: 1339
-        height: 1067
+        x: 1733
+        y: 813
+        width: 524
+        height: 209
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -187,20 +187,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 97d430b54cd31b645a10fc1e2497de02
-      internalID: -587484822
+      spriteID: f0b6bb244762a7b43b425e9ee250f3d5
+      internalID: 1728944310
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: bones1_4
+      name: birds_4
       rect:
         serializedVersion: 2
-        x: 109
-        y: 41
-        width: 462
-        height: 244
+        x: 137
+        y: 403
+        width: 668
+        height: 208
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -208,8 +208,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 52af5276ff8013b46a52d9b7633d73d4
-      internalID: 180006422
+      spriteID: 4ee3d4faceb896245ac8780e5acaac62
+      internalID: -213476420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birds_5
+      rect:
+        serializedVersion: 2
+        x: 2864
+        y: 587
+        width: 511
+        height: 224
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0f0d5e972e88ba744ae481b2e4eee798
+      internalID: -510781704
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birds_6
+      rect:
+        serializedVersion: 2
+        x: 1465
+        y: 183
+        width: 582
+        height: 396
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ab10d3b306628c4398585adab4a6816
+      internalID: 536835432
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: birds_7
+      rect:
+        serializedVersion: 2
+        x: 3359
+        y: 375
+        width: 210
+        height: 126
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b891b6a4c65c4fb47bd9f7cd60b7cf94
+      internalID: -1185950730
       vertices: []
       indices: 
       edges: []
@@ -225,11 +288,14 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      bones1_0: -1294942603
-      bones1_1: -1592710564
-      bones1_2: -498533468
-      bones1_3: -587484822
-      bones1_4: 180006422
+      birds_0: 803212192
+      birds_1: -317319342
+      birds_2: 70852285
+      birds_3: 1728944310
+      birds_4: -213476420
+      birds_5: -510781704
+      birds_6: 536835432
+      birds_7: -1185950730
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

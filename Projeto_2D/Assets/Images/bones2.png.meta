@@ -108,7 +108,70 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: bones2_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 379
+        width: 1217
+        height: 956
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a8d85b06afb85c4a90b7c16f58490c5
+      internalID: 457617493
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bones2_1
+      rect:
+        serializedVersion: 2
+        x: 1347
+        y: 621
+        width: 2749
+        height: 1093
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 41a01b39c71c3e54aa4bc2fee35aef10
+      internalID: -1590505676
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: bones2_2
+      rect:
+        serializedVersion: 2
+        x: 1320
+        y: 0
+        width: 1627
+        height: 593
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07d589dcb4f31244dae7fae0394a39f8
+      internalID: 420438777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -119,7 +182,10 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      bones2_0: 457617493
+      bones2_1: -1590505676
+      bones2_2: 420438777
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
