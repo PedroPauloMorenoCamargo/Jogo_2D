@@ -7,7 +7,9 @@ public class Player_Movement : MonoBehaviour
     public float moveForce = 5f;    // Movement speed
     public float rotateForce = 100f; // Rotation speed for the head
     public float launchForce = 10f;  // Impulse force when launching
-    public AudioSource jumpAudio;  // Audio source for the jump sound
+    public AudioSource jumpAudio;
+
+    public AudioSource fallAudio;
     public GameObject balls; // List of balls (Bola_1, Bola_2, Bola_3)
 
     private int groundedCount = 0;  // Counter for how many child objects are grounded
@@ -131,6 +133,7 @@ public class Player_Movement : MonoBehaviour
         groundedCount++;
         isGrounded = true;
         if (Mathf.Abs(player_last_y_position - joints[0].transform.position.y)>30){
+            fallAudio.Play();
             cameraFollow.ShakeCamera();
         }
     }
