@@ -22,7 +22,7 @@ public class CameraFollow : MonoBehaviour
     public float maxX = 10f;
     public float minY = -5f;
     public float maxY = 5f;
-
+    
     private bool isShaking = false;  // Flag to indicate if the camera is currently shaking
 
     void LateUpdate()
