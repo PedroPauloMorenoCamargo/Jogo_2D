@@ -101,16 +101,16 @@ public class Player_Movement : MonoBehaviour
     }
     private void Reset_Position()
     {
-        joints[0].transform.position = new Vector2(-15.0f + rest_pos, 5.0f);
+        joints[0].transform.position = new Vector2(-18.0f+3 + rest_pos, 5.0f);
         joints[0].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[0].velocity = Vector2.zero;
-        joints[1].transform.position = new Vector2(-13.98f + rest_pos, 5.0f);
+        joints[1].transform.position = new Vector2(-16.776f+3 + rest_pos, 5.0f);
         joints[1].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[1].velocity = Vector2.zero;
-        joints[2].transform.position = new Vector2(-12.81f + rest_pos, 5.0f);
+        joints[2].transform.position = new Vector2(-15.372f+3 + rest_pos, 5.0f);
         joints[2].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[2].velocity = Vector2.zero;
-        joints[3].transform.position = new Vector2(-11.68f + rest_pos, 5.0f);
+        joints[3].transform.position = new Vector2(-14.016f+3 + rest_pos, 5.0f);
         joints[3].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[3].velocity = Vector2.zero;
     }
