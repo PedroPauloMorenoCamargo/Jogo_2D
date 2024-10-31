@@ -43,7 +43,7 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
@@ -108,7 +108,196 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: combs_0
+      rect:
+        serializedVersion: 2
+        x: 237
+        y: 837
+        width: 904
+        height: 698
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ad26e93da12e2284db92bbf350ea762b
+      internalID: 131250004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combs_1
+      rect:
+        serializedVersion: 2
+        x: 1309
+        y: 386
+        width: 564
+        height: 690
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d7f4f828fffda924ea1b413fb9c3fe7d
+      internalID: 1101092827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combs_2
+      rect:
+        serializedVersion: 2
+        x: 2041
+        y: 585
+        width: 1404
+        height: 751
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b6e63df16510b64da3cc6392070d1f0
+      internalID: 1676630351
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combs_3
+      rect:
+        serializedVersion: 2
+        x: 99
+        y: 116
+        width: 338
+        height: 396
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 760c09a2a9ba0b64e89a87892d5c60b6
+      internalID: -2058098923
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combs_5
+      rect:
+        serializedVersion: 2
+        x: 3131
+        y: 369
+        width: 235
+        height: 160
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7e1d8c40a6ab4504eb0f25142e0b93ad
+      internalID: -628715355
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combs_6
+      rect:
+        serializedVersion: 2
+        x: 3419
+        y: 139
+        width: 160
+        height: 391
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b9ba96eb1d3b64448ade7a146772d25
+      internalID: -880988445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combs_7
+      rect:
+        serializedVersion: 2
+        x: 3677
+        y: 337
+        width: 99
+        height: 196
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 80a52e53d5284aa42b7452568dd0e65c
+      internalID: -625607169
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combs_8
+      rect:
+        serializedVersion: 2
+        x: 2697
+        y: 11
+        width: 660
+        height: 341
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e744ff6626cf088448a6d65666ad3859
+      internalID: 1261214102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: combs_4
+      rect:
+        serializedVersion: 2
+        x: 714
+        y: 295
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 564117303250746459ce6883bb94a247
+      internalID: 274459896
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -119,7 +308,16 @@ TextureImporter:
     edges: []
     weights: []
     secondaryTextures: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      combs_0: 131250004
+      combs_1: 1101092827
+      combs_2: 1676630351
+      combs_3: -2058098923
+      combs_4: 274459896
+      combs_5: -628715355
+      combs_6: -880988445
+      combs_7: -625607169
+      combs_8: 1261214102
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
