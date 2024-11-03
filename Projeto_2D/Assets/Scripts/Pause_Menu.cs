@@ -33,7 +33,7 @@ public class PauseMenu : MonoBehaviour
 
     void ActivatePauseMenu()
     {
-        pauseMenu.SetActive(true);e
+        pauseMenu.SetActive(true);
         planeSpriteRenderer.color = new Color(planeSpriteRenderer.color.r, planeSpriteRenderer.color.g, planeSpriteRenderer.color.b, opacityValue);
         Time.timeScale = 0f;  
     }
