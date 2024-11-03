@@ -247,7 +247,7 @@ public class Player_Movement : MonoBehaviour
 
     private IEnumerator EndSequenceCoroutine()
     {
-        float duration = 10f;
+        float duration = 15f;
         float elapsed = 0f;
 
         vignette.color.Override(Color.black);
