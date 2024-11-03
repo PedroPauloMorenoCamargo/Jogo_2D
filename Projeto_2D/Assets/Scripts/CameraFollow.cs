@@ -74,14 +74,14 @@ public class CameraFollow : MonoBehaviour
 
     IEnumerator ZoomIn()
     {
-        while (Mathf.Abs(mainCamera.orthographicSize - 8) > 0.01f)
+        while (Mathf.Abs(mainCamera.orthographicSize - 9) > 0.01f)
         {
-            mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, 8, Time.deltaTime * zoomSpeed);
+            mainCamera.orthographicSize = Mathf.Lerp(mainCamera.orthographicSize, 9, Time.deltaTime * zoomSpeed);
             yield return null;  // Wait for the next frame
         }
 
         // Ensure the final camera size is exactly the target size
-        mainCamera.orthographicSize = 8;
+        mainCamera.orthographicSize = 9;
     }
 
     // Public method to trigger the camera shake

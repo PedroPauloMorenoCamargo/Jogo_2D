@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI; // Add this line to use the Toggle component
 
 public class Player_Movement : MonoBehaviour
 {
@@ -8,49 +9,63 @@ public class Player_Movement : MonoBehaviour
     public float rotateForce = 100f; // Rotation speed for the head
     public float launchForce = 10f;  // Impulse force when launching
     public AudioSource jumpAudio;
-
     public AudioSource fallAudio;
     public GameObject balls; // List of balls (Bola_1, Bola_2, Bola_3)
+    public Toggle ballToggle; // Reference to the UI Toggle for ball handling
 
     private int groundedCount = 0;  // Counter for how many child objects are grounded
     public bool isGrounded = false;  // To check if any part is touching the ground
-
     public bool can_move = false;  // Toggle to enable/disable movement
     private bool ballShown = false; // Toggle to show/hide balls
-
     private float rest_pos = -45.0f;  // Resting position of the head
-
     public float impactThreshold = 5f; // Minimum impact velocity to trigger camera shake
     private CameraFollow cameraFollow; // Reference to CameraFollow script
-
     private float player_last_y_position;
 
-    private void Start(){   
+    private void Start()
+    {
         player_last_y_position = joints[0].transform.position.y;
-        // Get reference to the CameraFollow component on the main camera
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
+        
+        // Initially hide balls if ballToggle is not enabled
+        if (ballToggle != null && !ballToggle.isOn)
+        {
+            balls.SetActive(false);
+        }
     }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.C))
         {
             Reset_Position();
         }
-        
-        if (can_move){
+
+        if (can_move)
+        {
             Move();
-            if (Input.GetKeyUp(KeyCode.Space)){
-                if(isGrounded){
+            if (Input.GetKeyUp(KeyCode.Space))
+            {
+                if (isGrounded)
+                {
                     Launch();
                 }
-                HideBalls();
+                if (ballToggle.isOn)
+                {
+                    HideBalls();
+                }
             }
 
-            if (Input.GetKeyDown(KeyCode.Space)){
-                ShowBalls();
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                if (ballToggle.isOn)
+                {
+                    ShowBalls();
+                }
             }
 
-            if (ballShown){
+            if (ballShown  && ballToggle.isOn)
+            {
                 UpdateBallPositions();
             }
         }
@@ -79,7 +94,7 @@ public class Player_Movement : MonoBehaviour
     }
 
     private void ShowBalls()
-    {   
+    {
         ballShown = true;
         balls.SetActive(true);
     }
@@ -99,18 +114,19 @@ public class Player_Movement : MonoBehaviour
         balls.transform.position = offsetPosition;
         balls.transform.rotation = joints[3].transform.rotation;
     }
+
     private void Reset_Position()
     {
-        joints[0].transform.position = new Vector2(-18.0f+3 + rest_pos, 5.0f);
+        joints[0].transform.position = new Vector2(-18.0f + 3 + rest_pos, 5.0f);
         joints[0].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[0].velocity = Vector2.zero;
-        joints[1].transform.position = new Vector2(-16.776f+3 + rest_pos, 5.0f);
+        joints[1].transform.position = new Vector2(-16.776f + 3 + rest_pos, 5.0f);
         joints[1].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[1].velocity = Vector2.zero;
-        joints[2].transform.position = new Vector2(-15.372f+3 + rest_pos, 5.0f);
+        joints[2].transform.position = new Vector2(-15.372f + 3 + rest_pos, 5.0f);
         joints[2].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[2].velocity = Vector2.zero;
-        joints[3].transform.position = new Vector2(-14.016f+3 + rest_pos, 5.0f);
+        joints[3].transform.position = new Vector2(-14.016f + 3 + rest_pos, 5.0f);
         joints[3].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[3].velocity = Vector2.zero;
     }
@@ -126,13 +142,16 @@ public class Player_Movement : MonoBehaviour
         }
     }
 
-    public void OnChildCollisionWithGround(){
-        if (can_move == false){
+    public void OnChildCollisionWithGround()
+    {
+        if (can_move == false)
+        {
             can_move = true;
         }
         groundedCount++;
         isGrounded = true;
-        if (Mathf.Abs(player_last_y_position - joints[0].transform.position.y)>30){
+        if (Mathf.Abs(player_last_y_position - joints[0].transform.position.y) > 30)
+        {
             fallAudio.Play();
             cameraFollow.ShakeCamera();
         }
@@ -142,7 +161,8 @@ public class Player_Movement : MonoBehaviour
     {
         groundedCount--;
 
-        if (groundedCount <= 0){
+        if (groundedCount <= 0)
+        {
             isGrounded = false;
             groundedCount = 0;
         }

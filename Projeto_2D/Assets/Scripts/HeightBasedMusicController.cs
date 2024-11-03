@@ -1,13 +1,15 @@
 using UnityEngine;
+using UnityEngine.UI;
 using System.Collections;
 
 public class HeightBasedMusicController : MonoBehaviour
 {
-    public Transform cobra; // Arraste o Transform da cobra diretamente aqui
+    public Transform[] playerJoints = new Transform[4];
     public AudioSource groundMusic;
     public AudioSource spaceMusic;
-    public float transitionHeight = 190f;
-    public float fadeDuration = 1.0f; // Duração do fade em segundos
+    public Slider ambientMusicSlider;
+    public float transitionHeight = -70f;
+    public float fadeDuration = 1.0f;
 
     private bool isInSpace = false;
     public bool gameStarted = false;
@@ -17,46 +19,47 @@ public class HeightBasedMusicController : MonoBehaviour
     {
         if (groundMusic != null && spaceMusic != null)
         {
-            Debug.Log("Starting with ground music.");
-            groundMusic.volume = 1.0f; // Inicia a música do chão no volume máximo
+            if (ambientMusicSlider != null)
+            {
+                if (ambientMusicSlider.value == 0)
+                {
+                    ambientMusicSlider.value = 1.0f;
+                }
+                ambientMusicSlider.onValueChanged.AddListener(UpdateAmbientVolume);
+            }
+
+            groundMusic.volume = 1.0f * ambientMusicSlider.value;
+            spaceMusic.volume = 0.0f;
             groundMusic.Play();
-            spaceMusic.volume = 0.0f; // Inicia a música do espaço no volume mínimo
             spaceMusic.Play();
-        }
-        else
-        {
-            Debug.LogError("Audio sources are not assigned.");
+
         }
     }
 
     void Update()
     {
-        if (!gameStarted)
-        {
-            Debug.Log("Waiting for the game to start...");
+        if (!gameStarted){
             return;
         }
 
-        if (groundMusic == null || spaceMusic == null)
+
+        // Calculate the mean height of the four player joints
+        float meanHeight = 0f;
+        foreach (Transform joint in playerJoints)
         {
-            Debug.LogError("Audio sources are not assigned.");
-            return;
+            meanHeight += joint.position.y;
         }
+        meanHeight /= playerJoints.Length;
 
-        float cobraHeight = cobra.position.y;
-        Debug.Log("Cobra Global Height: " + cobraHeight);  // Log para verificar a altura da cobra em tempo real
-
-        if (cobraHeight >= transitionHeight && !isInSpace)
+        if (meanHeight >= transitionHeight && !isInSpace)
         {
-            Debug.Log("Switching to space music.");
-            if (fadeCoroutine != null) StopCoroutine(fadeCoroutine); // Para qualquer fade em andamento
+            if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
             fadeCoroutine = StartCoroutine(FadeMusic(groundMusic, spaceMusic));
             isInSpace = true;
         }
-        else if (cobraHeight < transitionHeight && isInSpace)
+        else if (meanHeight < transitionHeight && isInSpace)
         {
-            Debug.Log("Switching to ground music.");
-            if (fadeCoroutine != null) StopCoroutine(fadeCoroutine); // Para qualquer fade em andamento
+            if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
             fadeCoroutine = StartCoroutine(FadeMusic(spaceMusic, groundMusic));
             isInSpace = false;
         }
@@ -66,18 +69,37 @@ public class HeightBasedMusicController : MonoBehaviour
     {
         float startVolume = fromMusic.volume;
         float endVolume = toMusic.volume;
-
         float elapsedTime = 0f;
 
         while (elapsedTime < fadeDuration)
         {
-            fromMusic.volume = Mathf.Lerp(startVolume, 0, elapsedTime / fadeDuration);
-            toMusic.volume = Mathf.Lerp(endVolume, 1, elapsedTime / fadeDuration);
+            fromMusic.volume = Mathf.Lerp(startVolume, 0, elapsedTime / fadeDuration) * ambientMusicSlider.value;
+            toMusic.volume = Mathf.Lerp(endVolume, 1, elapsedTime / fadeDuration) * ambientMusicSlider.value;
             elapsedTime += Time.deltaTime;
             yield return null;
         }
 
         fromMusic.volume = 0;
-        toMusic.volume = 1;
+        toMusic.volume = 1 * ambientMusicSlider.value;
+    }
+
+    void UpdateAmbientVolume(float value)
+    {
+        if (isInSpace)
+        {
+            spaceMusic.volume = value;
+        }
+        else
+        {
+            groundMusic.volume = value;
+        }
+    }
+
+    void OnDestroy()
+    {
+        if (ambientMusicSlider != null)
+        {
+            ambientMusicSlider.onValueChanged.RemoveListener(UpdateAmbientVolume);
+        }
     }
 }
