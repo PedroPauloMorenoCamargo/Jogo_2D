@@ -258,8 +258,7 @@ public class Player_Movement : MonoBehaviour
             float t = elapsed / duration;
 
             // Gradually increase the vignette intensity
-            if (vignette != null)
-            {
+            if (vignette != null){
                 vignette.intensity.value = Mathf.Lerp(0f, 1f, t);
             }
 
