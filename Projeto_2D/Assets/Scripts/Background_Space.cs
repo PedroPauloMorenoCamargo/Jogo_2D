@@ -2,28 +2,28 @@ using UnityEngine;
 
 public class BackgroundColorLerp : MonoBehaviour
 {
-    public Color color1 = Color.red;   // Starting color
-    public Color color2 = Color.blue;  // Ending color
-    public float duration = 5.0f;      // Time to interpolate
+    public Color color1 = Color.red;   
+    public Color color2 = Color.blue; 
+    public float duration = 5.0f;      
 
     private Camera cam;
     private float lerpTime;
 
     void Start()
     {
-        cam = Camera.main;  // Reference to the main camera
-        lerpTime = 0f;      // Initialize lerp time
+        cam = Camera.main;  
+        lerpTime = 0f;      
     }
 
     void Update()
     {
-        // Increment time based on how much time has passed since last frame
+        //Incrementa o tempo de interpolação
         lerpTime += Time.deltaTime;
 
-        // Cycle lerpTime so it repeats back and forth between 0 and duration
+        // Calcula o valor de t entre 0 e 1
         float t = Mathf.PingPong(lerpTime / duration, 1f);
 
-        // Interpolate the background color
+        // Interpola a cor de fundo da câmera
         cam.backgroundColor = Color.Lerp(color1, color2, t);
     }
 }

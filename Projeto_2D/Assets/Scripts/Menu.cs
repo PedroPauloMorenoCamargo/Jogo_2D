@@ -1,13 +1,13 @@
 using UnityEngine;
 public class MenuItem : MonoBehaviour
 {
-    public GameObject targetObject;  // Assign the GameObject that has the SpriteRenderer you want to change
+    public GameObject targetObject;  
     private SpriteRenderer spriteRenderer;
-    public Player_Movement playerMovement;  // Reference to the Player_Movement script
-    public CameraFollow cameraController; // Reference to your camera controllera
+    public Player_Movement playerMovement; 
+    public CameraFollow cameraController; 
     public float launchForce = 10f;
-    public float zoomSpeed = 2f;  // Speed of the zoom effect
-    public float targetCameraSize = 10f;  // Target camera size
+    public float zoomSpeed = 2f;  
+    public float targetCameraSize = 10f;  
     private Color originalColor;
 
     void Start()
@@ -16,20 +16,16 @@ public class MenuItem : MonoBehaviour
         originalColor = spriteRenderer.color;
     }
 
-    void OnMouseEnter()
-    {
-        // Change only the alpha to give the appearance of selection
+    void OnMouseEnter(){
+        // Mudar a cor do sprite para um tom mais escuro on hover
         Color hoverColor = originalColor;
         hoverColor.a = 0.5f;
         spriteRenderer.color = hoverColor;
     }
 
-    void OnMouseDown()
-    {
-        // Set a variable in the camera controller to true
+    void OnMouseDown(){
         cameraController.followPlayer = 1;
         
-        // Reset the color back to original after the click
         spriteRenderer.color = originalColor;
 
         playerMovement.joints[0].AddForce(Vector2.right * launchForce, ForceMode2D.Impulse);

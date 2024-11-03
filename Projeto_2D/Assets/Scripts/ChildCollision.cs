@@ -3,7 +3,7 @@ using UnityEngine;
 public class ChildCollision : MonoBehaviour
 {
     private Player_Movement parentScript;
-    public HeightBasedMusicController musicController;  // Referência ao controlador de música
+    public HeightBasedMusicController musicController;  
     private bool hasLanded = false;
 
     private void Start()

@@ -42,8 +42,7 @@ public class HeightBasedMusicController : MonoBehaviour
             return;
         }
 
-
-        // Calculate the mean height of the four player joints
+        //Calcula a altura média dos joints do jogador
         float meanHeight = 0f;
         foreach (Transform joint in playerJoints)
         {
@@ -51,6 +50,7 @@ public class HeightBasedMusicController : MonoBehaviour
         }
         meanHeight /= playerJoints.Length;
 
+        //Verifica se a altura média ultrapassou a altura de transição
         if (meanHeight >= transitionHeight && !isInSpace)
         {
             if (fadeCoroutine != null) StopCoroutine(fadeCoroutine);
@@ -65,8 +65,8 @@ public class HeightBasedMusicController : MonoBehaviour
         }
     }
 
-    private IEnumerator FadeMusic(AudioSource fromMusic, AudioSource toMusic)
-    {
+    private IEnumerator FadeMusic(AudioSource fromMusic, AudioSource toMusic){
+        //Fade entre as músicas
         float startVolume = fromMusic.volume;
         float endVolume = toMusic.volume;
         float elapsedTime = 0f;
