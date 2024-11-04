@@ -1,6 +1,6 @@
 # Getting Over Snake
 
-## A game where you are a snake and your objective is to climb a tree in order to reach another stage of evolution. But be advised many snakes have tryied but none yet have succeeded.
+## A game where you are a snake and your objective is to climb a tree in order to reach another stage of evolution. But be advised many snakes have tried but none yet have succeeded.
 
 ## References
 
