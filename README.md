@@ -1,6 +1,6 @@
 # Getting Over Snake
 
-## A game where you are a snake and your objective is to climb a tree in order to reach another stage of evolution. But be advised many snakes have tried but none yet have succeeded.
+## In this game, you play as a snake with a singular goal: climb the tree to reach the next stage of evolution. But beware – many snakes have tried, yet none have succeeded
 
 ## References
 
