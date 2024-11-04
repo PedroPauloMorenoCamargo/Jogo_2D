@@ -16,3 +16,6 @@ https://assetstore.unity.com/packages/audio/music/sci-fi-underscore-music-vol2-2
 #### Sound Effects:
 - [Fall Sound](https://pixabay.com/pt/sound-effects/hit-sound-effect-12445/)
 - [Jump Sound](https://pixabay.com/pt/sound-effects/hit-sound-effect-12445/)
+
+#### Shader Inspiration:
+- https://www.youtube.com/watch?v=GXE0VqH08sc&t=215s
