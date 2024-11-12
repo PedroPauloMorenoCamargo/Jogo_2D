@@ -8,24 +8,24 @@ using UnityEngine.Rendering.Universal;
 
 public class Player_Movement : MonoBehaviour{
 
-    //Joints
+    // Joints
     public List<Rigidbody2D> joints = new List<Rigidbody2D>();
 
-    //Movimentação Horizontal
+    // Movimentação Horizontal
     public float moveForce = 5f;
 
-    //Rotação
+    // Rotação
     public float rotateForce = 100f;
 
-    //Pulo Força
+    // Pulo Força
     public float launchForce = 10f;  
     public AudioSource jumpAudio;
     public AudioSource fallAudio;
 
-    //Bolas de Mira
+    // Bolas de Mira
     public GameObject balls; 
 
-    //Botão de ativação das bolas
+    // Botão de ativação das bolas
     public Toggle ballToggle; 
 
     // Sprites para os joints no final
@@ -38,18 +38,17 @@ public class Player_Movement : MonoBehaviour{
     public Volume globalVolume; 
     private Vignette vignette;
 
-    //Checa se o player está no chão
+    // Checa se o player está no chão
     public bool isGrounded = false;
 
-    //Verifica se o player pode se mover
+    // Verifica se o player pode se mover
     public bool can_move = false;
 
     // Força de impacto para o shake da câmera
     public float impactThreshold = 5f;
 
-    //GameObjects
+    // GameObjects
     public GameObject circle;
-
     public GameObject Title;
 
     // Variáveis privadas
@@ -64,10 +63,11 @@ public class Player_Movement : MonoBehaviour{
     private void Start(){
         // Pega a posição Y inicial do player
         player_last_y_position = joints[0].transform.position.y;
+
         // Pega o componente CameraFollow
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
 
-        //Inicializa as bolas
+        // Inicializa as bolas
         if (ballToggle != null && !ballToggle.isOn)
         {
             balls.SetActive(false);
@@ -83,33 +83,30 @@ public class Player_Movement : MonoBehaviour{
             }
         }
 
-        //Pesquisa o Vignette no Volume Global
+        // Pesquisa o Vignette no Volume Global
         if (globalVolume != null && globalVolume.profile != null)
         {
             if (!globalVolume.profile.TryGet(out vignette))
             {
                 Debug.LogError("Vignette not found in Global Volume profile.");
             }
-
         }
     }
 
     private void Update(){
-        //Checa se está no final
+        // Checa se está no final
         if (isEnding)
             return; 
 
-        //Checa se o player resetou a posição
+        // Checa se o player resetou a posição
         if (Input.GetKeyDown(KeyCode.C))
         {
             Reset_Position();
         }
 
-        //Checa se o player pode se mover
+        // Checa se o player pode se mover
         if (can_move){
-            //Movimentação do player
-            Move();
-            //Handler do pulo e da mira
+            // Handler do pulo e da mira
             if (Input.GetKeyUp(KeyCode.Space))
             {
                 if (isGrounded)
@@ -134,6 +131,17 @@ public class Player_Movement : MonoBehaviour{
             {
                 UpdateBallPositions();
             }
+        }
+    }
+
+    private void FixedUpdate(){
+        // Checa se está no final
+        if (isEnding)
+            return;
+
+        // Checa se o player pode se mover
+        if (can_move){
+            Move();
         }
     }
 
@@ -174,7 +182,7 @@ public class Player_Movement : MonoBehaviour{
         Vector2 headPosition = joints[3].transform.position;
         Vector2 tailDirection = (joints[3].transform.position - joints[0].transform.position).normalized;
 
-        Vector2 offsetPosition = headPosition + tailDirection * (1.5f);
+        Vector2 offsetPosition = headPosition + tailDirection * 1.5f;
         balls.transform.position = offsetPosition;
         balls.transform.rotation = joints[3].transform.rotation;
     }
@@ -184,12 +192,15 @@ public class Player_Movement : MonoBehaviour{
         joints[0].transform.position = new Vector2(-19.0f -2  + rest_pos, 5.0f);
         joints[0].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[0].velocity = Vector2.zero;
-        joints[1].transform.position = new Vector2(-17.776f -2+ rest_pos, 5.0f);
+
+        joints[1].transform.position = new Vector2(-17.776f -2 + rest_pos, 5.0f);
         joints[1].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[1].velocity = Vector2.zero;
-        joints[2].transform.position = new Vector2(-16.372f  -2+ rest_pos, 5.0f);
+
+        joints[2].transform.position = new Vector2(-16.372f -2 + rest_pos, 5.0f);
         joints[2].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[2].velocity = Vector2.zero;
+
         joints[3].transform.position = new Vector2(-15.016f -2 + rest_pos, 5.0f);
         joints[3].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[3].velocity = Vector2.zero;
@@ -207,7 +218,7 @@ public class Player_Movement : MonoBehaviour{
     }
 
     public void OnChildCollisionWithGround(){
-        //Checa colisão com o chão ou com a plataforma
+        // Checa colisão com o chão ou com a plataforma
         if (can_move == false)
         {
             can_move = true;
@@ -217,13 +228,19 @@ public class Player_Movement : MonoBehaviour{
         isGrounded = true;
         if (Mathf.Abs(player_last_y_position - joints[0].transform.position.y) > 30)
         {
-            fallAudio.Play();
-            cameraFollow.ShakeCamera();
+            if (fallAudio != null)
+            {
+                fallAudio.Play();
+            }
+            if (cameraFollow != null)
+            {
+                cameraFollow.ShakeCamera();
+            }
         }
     }
 
     public void OnChildCollisionExitGround(){
-        //Checa se o player saiu do chão oy da plataforma
+        // Checa se o player saiu do chão ou da plataforma
         groundedCount--;
 
         if (groundedCount <= 0)
@@ -270,15 +287,20 @@ public class Player_Movement : MonoBehaviour{
         float duration = 15f;
         float elapsed = 0f;
 
-        vignette.color.Override(Color.black);
-        vignette.smoothness.Override(1f);
+        if (vignette != null)
+        {
+            vignette.color.Override(Color.black);
+            vignette.smoothness.Override(1f);
+        }
+
         while (elapsed < duration)
         {
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
 
             // Interpola o Vignette
-            if (vignette != null){
+            if (vignette != null)
+            {
                 vignette.intensity.value = Mathf.Lerp(0f, 1f, t);
             }
 
@@ -291,7 +313,8 @@ public class Player_Movement : MonoBehaviour{
             vignette.intensity.value = 1f;
         }
 
-        // Loada o menu principal
+        // Carrega o menu principal
         SceneManager.LoadScene(0);
     }
 }
+ 

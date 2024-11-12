@@ -46032,7 +46032,7 @@ Transform:
   m_GameObject: {fileID: 1799652514}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 8.448817, y: 209.43027, z: 0}
+  m_LocalPosition: {x: 8.448817, y: 205.43027, z: 0}
   m_LocalScale: {x: 602.4011, y: 55.82453, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -47447,8 +47447,8 @@ MonoBehaviour:
   - {fileID: 1606081655}
   - {fileID: 1014102824}
   - {fileID: 1984922920}
-  moveForce: 1.5
-  rotateForce: 5
+  moveForce: 15
+  rotateForce: 50
   launchForce: 10
   jumpAudio: {fileID: 970433639}
   fallAudio: {fileID: 652844169}
