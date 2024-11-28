@@ -4,12 +4,18 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using UnityEngine.Rendering;
-using UnityEngine.Rendering.Universal; 
+using UnityEngine.Rendering.Universal;
+using System;
+using UnityEngine.EventSystems;
 
-public class Player_Movement : MonoBehaviour{
 
+public class Player_Movement : MonoBehaviour
+{
+    public PauseMenu PauseMenu;
     // Joints
     public List<Rigidbody2D> joints = new List<Rigidbody2D>();
+
+    public Joystick joystick;
 
     // Movimentação Horizontal
     public float moveForce = 5f;
@@ -18,15 +24,15 @@ public class Player_Movement : MonoBehaviour{
     public float rotateForce = 100f;
 
     // Pulo Força
-    public float launchForce = 10f;  
+    public float launchForce = 10f;
     public AudioSource jumpAudio;
     public AudioSource fallAudio;
 
     // Bolas de Mira
-    public GameObject balls; 
+    public GameObject balls;
 
     // Botão de ativação das bolas
-    public Toggle ballToggle; 
+    public Toggle ballToggle;
 
     // Sprites para os joints no final
     public Sprite joint0EndSprite;
@@ -35,7 +41,7 @@ public class Player_Movement : MonoBehaviour{
     public Sprite joint3EndSprite;
 
     // Volume global
-    public Volume globalVolume; 
+    public Volume globalVolume;
     private Vignette vignette;
 
     // Checa se o player está no chão
@@ -51,6 +57,10 @@ public class Player_Movement : MonoBehaviour{
     public GameObject circle;
     public GameObject Title;
 
+    // UI Button para o pulo
+    public Button jumpButton;
+    public Button restartButton;
+
     // Variáveis privadas
     private List<SpriteRenderer> jointRenderers = new List<SpriteRenderer>();
     private int groundedCount = 0;
@@ -60,12 +70,49 @@ public class Player_Movement : MonoBehaviour{
     private float player_last_y_position;
     private bool isEnding = false;
 
-    private void Start(){
+    private Vector2[] jointPositions;
+
+    private Quaternion[] jointRotations;
+
+    public GameObject fallUI;
+
+
+    
+
+    private void Start()
+    {
+        // Configurar os eventos do botão de pulo
+        if (jumpButton != null)
+        {
+            EventTrigger trigger = jumpButton.gameObject.AddComponent<EventTrigger>();
+
+            // Ao pressionar o botão, exibe as bolas
+            EventTrigger.Entry onPressEntry = new EventTrigger.Entry();
+            onPressEntry.eventID = EventTriggerType.PointerDown;
+            onPressEntry.callback.AddListener((eventData) => OnJumpButtonPressed());
+            trigger.triggers.Add(onPressEntry);
+
+            // Ao soltar o botão, realiza o pulo e oculta as bolas
+            EventTrigger.Entry onReleaseEntry = new EventTrigger.Entry();
+            onReleaseEntry.eventID = EventTriggerType.PointerUp;
+            onReleaseEntry.callback.AddListener((eventData) => OnJumpButtonReleased());
+            trigger.triggers.Add(onReleaseEntry);
+        }
+
         // Pega a posição Y inicial do player
         player_last_y_position = joints[0].transform.position.y;
 
         // Pega o componente CameraFollow
         cameraFollow = Camera.main.GetComponent<CameraFollow>();
+
+        jointPositions = new Vector2[joints.Count];
+        jointRotations = new Quaternion[joints.Count];
+
+        if (fallUI != null)
+        {
+            fallUI.SetActive(false);
+        }
+
 
         // Inicializa as bolas
         if (ballToggle != null && !ballToggle.isOn)
@@ -93,92 +140,61 @@ public class Player_Movement : MonoBehaviour{
         }
     }
 
-    private void Update(){
+    private void Update()
+    {
         // Checa se está no final
         if (isEnding)
-            return; 
+            return;
 
         // Checa se o player resetou a posição
-        if (Input.GetKeyDown(KeyCode.C))
+        // Configurar o botão de restart
+        if (restartButton != null)
         {
-            Reset_Position();
+            restartButton.onClick.AddListener(Reset_Position);
         }
 
-        // Checa se o player pode se mover
-        if (can_move){
-            // Handler do pulo e da mira
-            if (Input.GetKeyUp(KeyCode.Space))
-            {
-                if (isGrounded)
-                {
-                    Launch();
-                }
-                if (ballToggle.isOn)
-                {
-                    HideBalls();
-                }
-            }
-
-            if (Input.GetKeyDown(KeyCode.Space))
-            {
-                if (ballToggle.isOn)
-                {
-                    ShowBalls();
-                }
-            }
-
-            if (ballShown && ballToggle.isOn)
-            {
-                UpdateBallPositions();
-            }
+        if (ballShown && ballToggle.isOn)
+        {
+            UpdateBallPositions();
         }
     }
 
-    private void FixedUpdate(){
+    private void FixedUpdate()
+    {
         // Checa se está no final
         if (isEnding)
             return;
 
         // Checa se o player pode se mover
-        if (can_move){
+        if (can_move)
+        {
             Move();
         }
     }
 
-    private void Move(){
-        // Movimentação horizontal
-        if (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A))
-        {
-            joints[0].AddForce(Vector2.left * moveForce);
-        }
-        else if (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D))
-        {
-            joints[0].AddForce(Vector2.right * moveForce);
-        }
+    private void Move()
+    {
+        float horizontalInput = joystick.Horizontal;
+        joints[0].AddForce(Vector2.right * moveForce * horizontalInput * Time.fixedDeltaTime);
 
-        // Rotação
-        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W))
-        {
-            joints[3].AddTorque(rotateForce);
-        }
-        else if (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S))
-        {
-            joints[3].AddTorque(-rotateForce);
-        }
+        float verticalInput = joystick.Vertical;
+        joints[3].AddTorque(rotateForce * verticalInput * Time.fixedDeltaTime);
     }
 
-    private void ShowBalls(){
+    private void ShowBalls()
+    {
         ballShown = true;
         balls.SetActive(true);
     }
 
-    private void HideBalls(){
+    private void HideBalls()
+    {
         ballShown = false;
         balls.SetActive(false);
     }
 
-    private void UpdateBallPositions(){
-        // Posiciona as bolas de mira conforme a posição da cabeça e a direção da cauda
+    private void UpdateBallPositions()
+    {
         Vector2 headPosition = joints[3].transform.position;
         Vector2 tailDirection = (joints[3].transform.position - joints[0].transform.position).normalized;
 
@@ -187,27 +203,32 @@ public class Player_Movement : MonoBehaviour{
         balls.transform.rotation = joints[3].transform.rotation;
     }
 
-    private void Reset_Position(){
-        // Reseta a posição dos joints
-        joints[0].transform.position = new Vector2(-19.0f -2  + rest_pos, 5.0f);
+    private void Reset_Position()
+    {
+        joints[0].transform.position = new Vector2(-19.0f - 2 + rest_pos, 5.0f);
         joints[0].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[0].velocity = Vector2.zero;
 
-        joints[1].transform.position = new Vector2(-17.776f -2 + rest_pos, 5.0f);
+        joints[1].transform.position = new Vector2(-17.776f - 2 + rest_pos, 5.0f);
         joints[1].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[1].velocity = Vector2.zero;
 
-        joints[2].transform.position = new Vector2(-16.372f -2 + rest_pos, 5.0f);
+        joints[2].transform.position = new Vector2(-16.372f - 2 + rest_pos, 5.0f);
         joints[2].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[2].velocity = Vector2.zero;
 
-        joints[3].transform.position = new Vector2(-15.016f -2 + rest_pos, 5.0f);
+        joints[3].transform.position = new Vector2(-15.016f - 2 + rest_pos, 5.0f);
         joints[3].transform.rotation = Quaternion.Euler(0, 0, 0);
         joints[3].velocity = Vector2.zero;
     }
 
-    private void Launch(){
-        // Pulo
+    private void Launch()
+    {
+        for (int i = 0; i < joints.Count; i++){
+            jointPositions[i] = joints[i].transform.position;
+            jointRotations[i] = joints[i].transform.rotation;
+        }
+
         Vector2 launchDirection = joints[0].transform.right;
         joints[0].AddForce(launchDirection * launchForce, ForceMode2D.Impulse);
 
@@ -217,8 +238,26 @@ public class Player_Movement : MonoBehaviour{
         }
     }
 
-    public void OnChildCollisionWithGround(){
-        // Checa colisão com o chão ou com a plataforma
+    public void OnJumpButtonPressed()
+    {
+        if (can_move && !ballShown && PauseMenu.isPaused == false){
+            ShowBalls();
+        }
+    }
+
+    public void OnJumpButtonReleased()
+    {   
+        if (ballShown && PauseMenu.isPaused == false){
+            HideBalls();
+        }  
+        if (isGrounded && can_move && PauseMenu.isPaused == false)
+        {
+            Launch(); 
+        }
+    }
+
+    public void OnChildCollisionWithGround()
+    {
         if (can_move == false)
         {
             can_move = true;
@@ -236,11 +275,15 @@ public class Player_Movement : MonoBehaviour{
             {
                 cameraFollow.ShakeCamera();
             }
+            if (fallUI != null)
+            {
+                fallUI.SetActive(true);
+            }
         }
     }
 
-    public void OnChildCollisionExitGround(){
-        // Checa se o player saiu do chão ou da plataforma
+    public void OnChildCollisionExitGround()
+    {
         groundedCount--;
 
         if (groundedCount <= 0)
@@ -252,16 +295,15 @@ public class Player_Movement : MonoBehaviour{
         player_last_y_position = joints[0].transform.position.y;
     }
 
-    public void OnChildCollisionWithEnd(){
-        // Checa se o player chegou ao final
+    public void OnChildCollisionWithEnd()
+    {
         if (isEnding)
             return;
 
         isEnding = true;
         balls.SetActive(false);
-        circle.SetActive(false); 
+        circle.SetActive(false);
 
-        // Troca os sprites dos joints
         if (jointRenderers.Count >= 4)
         {
             jointRenderers[0].sprite = joint0EndSprite;
@@ -270,7 +312,6 @@ public class Player_Movement : MonoBehaviour{
             jointRenderers[3].sprite = joint3EndSprite;
         }
 
-        // Desativa os joints
         foreach (Rigidbody2D rb in joints)
         {
             rb.velocity = Vector2.zero;
@@ -278,12 +319,11 @@ public class Player_Movement : MonoBehaviour{
             rb.simulated = false;
         }
 
-        // Começa a sequência de fim
         StartCoroutine(EndSequenceCoroutine());
     }
 
-    private IEnumerator EndSequenceCoroutine(){
-        // Corrotina de fim
+    private IEnumerator EndSequenceCoroutine()
+    {
         float duration = 15f;
         float elapsed = 0f;
 
@@ -298,7 +338,6 @@ public class Player_Movement : MonoBehaviour{
             elapsed += Time.deltaTime;
             float t = elapsed / duration;
 
-            // Interpola o Vignette
             if (vignette != null)
             {
                 vignette.intensity.value = Mathf.Lerp(0f, 1f, t);
@@ -307,14 +346,11 @@ public class Player_Movement : MonoBehaviour{
             yield return null;
         }
 
-        // Checa se o Vignette não é nulo
         if (vignette != null)
         {
             vignette.intensity.value = 1f;
         }
 
-        // Carrega o menu principal
         SceneManager.LoadScene(0);
     }
 }
- 
