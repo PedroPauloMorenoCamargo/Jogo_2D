@@ -76,6 +76,10 @@ public class Player_Movement : MonoBehaviour
 
     public GameObject fallUI;
 
+    public GameObject normalUI;
+    public bool hasWatchedAd = false;
+
+    public Button exitButton;
 
     
 
@@ -99,6 +103,7 @@ public class Player_Movement : MonoBehaviour
             trigger.triggers.Add(onReleaseEntry);
         }
 
+        exitButton.onClick.AddListener(exitButtonFunction);
         // Pega a posição Y inicial do player
         player_last_y_position = joints[0].transform.position.y;
 
@@ -148,6 +153,13 @@ public class Player_Movement : MonoBehaviour
 
         // Checa se o player resetou a posição
         // Configurar o botão de restart
+        if (hasWatchedAd){
+            ResetToLastJumpPosition();
+            hasWatchedAd = false; // Reset the boolean
+            fallUI.SetActive(false);
+            normalUI.SetActive(true);
+        }
+
         if (restartButton != null)
         {
             restartButton.onClick.AddListener(Reset_Position);
@@ -156,6 +168,17 @@ public class Player_Movement : MonoBehaviour
         if (ballShown && ballToggle.isOn)
         {
             UpdateBallPositions();
+        }
+    }
+
+    private void ResetToLastJumpPosition()
+    {
+        for (int i = 0; i < joints.Count; i++)
+        {
+            joints[i].transform.position = jointPositions[i];
+            joints[i].transform.rotation = jointRotations[i];
+            joints[i].velocity = Vector2.zero;
+            joints[i].angularVelocity = 0f;
         }
     }
 
@@ -258,13 +281,7 @@ public class Player_Movement : MonoBehaviour
 
     public void OnChildCollisionWithGround()
     {
-        if (can_move == false)
-        {
-            can_move = true;
-            Title.tag = "Ground";
-        }
-        groundedCount++;
-        isGrounded = true;
+        Debug.Log(can_move);
         if (Mathf.Abs(player_last_y_position - joints[0].transform.position.y) > 30)
         {
             if (fallAudio != null)
@@ -274,12 +291,20 @@ public class Player_Movement : MonoBehaviour
             if (cameraFollow != null)
             {
                 cameraFollow.ShakeCamera();
-            }
-            if (fallUI != null)
-            {
-                fallUI.SetActive(true);
-            }
+            } 
         }
+        if(player_last_y_position - joints[0].transform.position.y > 30 && can_move){
+            fallUI.SetActive(true);
+            normalUI.SetActive(false);
+        }
+        if (can_move == false)
+        {
+            can_move = true;
+            Title.tag = "Ground";
+            player_last_y_position = joints[0].transform.position.y;
+        }
+        groundedCount++;
+        isGrounded = true;
     }
 
     public void OnChildCollisionExitGround()
@@ -352,5 +377,11 @@ public class Player_Movement : MonoBehaviour
         }
 
         SceneManager.LoadScene(0);
+    }
+
+    private void exitButtonFunction(){
+        fallUI.SetActive(false);
+        normalUI.SetActive(true);
+        
     }
 }
