@@ -147,6 +147,7 @@ public class Player_Movement : MonoBehaviour
 
     private void Update()
     {
+        
         // Checa se está no final
         if (isEnding)
             return;
@@ -281,7 +282,6 @@ public class Player_Movement : MonoBehaviour
 
     public void OnChildCollisionWithGround()
     {
-        Debug.Log(can_move);
         if (Mathf.Abs(player_last_y_position - joints[0].transform.position.y) > 30)
         {
             if (fallAudio != null)
